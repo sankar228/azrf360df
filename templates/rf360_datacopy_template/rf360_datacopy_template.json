@@ -1,0 +1,493 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"rf360_src_sqlserver_LinkedService": {
+			"type": "string"
+		},
+		"rf360_sync_sqlserver_LinkedService": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/rf360_datacopy')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "rf360_equipment_datacopy",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "_id",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "_id",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "EntityId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "EntityId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "EntityType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "EntityType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedOn",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										},
+										"sink": {
+											"name": "CreatedOn",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedBy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CreatedBy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedOn",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										},
+										"sink": {
+											"name": "ModifiedOn",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedBy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ModifiedBy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DeviceName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DeviceName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsSupported",
+											"type": "Boolean",
+											"physicalType": "bit"
+										},
+										"sink": {
+											"name": "IsSupported",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "DateActive",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										},
+										"sink": {
+											"name": "DateActive",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "DateRetired",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										},
+										"sink": {
+											"name": "DateRetired",
+											"type": "DateTimeOffset",
+											"physicalType": "datetimeoffset"
+										}
+									},
+									{
+										"source": {
+											"name": "SapSkuId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										},
+										"sink": {
+											"name": "SapSkuId",
+											"type": "Guid",
+											"physicalType": "uniqueidentifier"
+										}
+									},
+									{
+										"source": {
+											"name": "ManufacturerId",
+											"type": "Int64",
+											"physicalType": "bigint"
+										},
+										"sink": {
+											"name": "ManufacturerId",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "ManufacturerName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ManufacturerName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MaterialGroup",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MaterialGroup",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MaterialNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MaterialNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MaterialSKU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "MaterialSKU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "MaterialDescription",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "MaterialDescription",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "rf360_src_sqlserv_Equipment",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "rf360_sync_sqlserver_Equipment",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/rf360_src_sqlserv_Equipment')]",
+				"[concat(variables('factoryId'), '/datasets/rf360_sync_sqlserver_Equipment')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/rf360_src_sqlserv_Equipment')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('rf360_src_sqlserver_LinkedService')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "_id",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "EntityId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "EntityType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreatedOn",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "CreatedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedOn",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DeviceName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsSupported",
+						"type": "bit"
+					},
+					{
+						"name": "DateActive",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "DateRetired",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "SapSkuId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ManufacturerId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ManufacturerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialSKU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MaterialDescription",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Equipment"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/rf360_sync_sqlserver_Equipment')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('rf360_sync_sqlserver_LinkedService')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "_id",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "EntityId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "EntityType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreatedOn",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "CreatedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedOn",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "ModifiedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DeviceName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsSupported",
+						"type": "bit"
+					},
+					{
+						"name": "DateActive",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "DateRetired",
+						"type": "datetimeoffset",
+						"scale": 7
+					},
+					{
+						"name": "SapSkuId",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ManufacturerId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ManufacturerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaterialSKU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MaterialDescription",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Equipment"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
