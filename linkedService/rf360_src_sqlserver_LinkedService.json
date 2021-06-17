@@ -1,0 +1,16 @@
+{
+	"name": "rf360_src_sqlserver_LinkedService",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=10.92.109.92,50066;initial catalog=RF360EntitySnapshots;user id=ned_reader",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3YTk5NGY4Yy04YjIyLTQ5ZjAtYmRjYi1kMDg1Mzc3NzViYTUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

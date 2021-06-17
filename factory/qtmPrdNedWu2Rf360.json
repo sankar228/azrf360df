@@ -1,0 +1,9 @@
+{
+	"name": "qtmPrdNedWu2Rf360",
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c4bfff51-329e-46a5-acbe-e2ba523fd08e",
+		"tenantId": "be0f980b-dd99-4b19-bd7b-bc71a09b026c"
+	}
+}
